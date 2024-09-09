@@ -1,5 +1,4 @@
-# Use the official Golang image as the base image for building
-FROM --platform=$BUILDPLATFORM golang:1.22.4 AS build
+FROM --platform=$BUILDPLATFORM golang:1.23.0 AS build
 
 # Set the working directory
 WORKDIR /app
@@ -11,14 +10,20 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 # Copy the rest of the application code
-COPY . ./
+COPY ./cmd ./cmd
+COPY ./internal ./internal
+COPY ./pkg ./pkg
+COPY ./tests tests
+
+# Run tests
+RUN go test ./... -v
 
 # Set environment variables for the target platform
 ARG TARGETOS
 ARG TARGETARCH
 
 # Build the Go application
-RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o backend ./cmd/booking-dinner/main.go
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o booking_server ./cmd/server/main.go
 
 # Use a minimal base image for the final image
 FROM --platform=$TARGETPLATFORM alpine:3.20.0
@@ -34,11 +39,11 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Bangkok /etc/localtime && echo "Asia/Bangkok
 WORKDIR /root/
 
 # Copy the Go binary from the build stage
-COPY --from=build /app/configs/config.yaml .
-COPY --from=build /app/backend .
+COPY ./configs ./configs
+COPY --from=build /app/booking_server .
 
-# Expose port 8080
+# Expose port
 EXPOSE 8080
 
 # Command to run the executable
-CMD ["./backend"]
+CMD ["./booking_server"]
