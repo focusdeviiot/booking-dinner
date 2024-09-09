@@ -18,7 +18,7 @@ ARG TARGETOS
 ARG TARGETARCH
 
 # Build the Go application
-RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o backend ./cmd/smart_electricity_tracker_backend/main.go
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o backend ./cmd/booking-dinner/main.go
 
 # Use a minimal base image for the final image
 FROM --platform=$TARGETPLATFORM alpine:3.20.0

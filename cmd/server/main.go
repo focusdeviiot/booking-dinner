@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"log"
 
-	"smart_electricity_tracker_backend/pkg/logger"
+	"booking-dinner/internal/api"
+	"booking-dinner/internal/config"
+	"booking-dinner/pkg/logger"
 
 	"github.com/gofiber/fiber/v2"
 )

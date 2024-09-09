@@ -5,7 +5,7 @@ import (
 	"runtime/debug"
 	"time"
 
-	"smart_electricity_tracker_backend/pkg/logger"
+	"booking-dinner/pkg/logger"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"

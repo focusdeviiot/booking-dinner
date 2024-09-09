@@ -5,3 +5,13 @@ server:
 logger:
     production: false
 
+restaurant:
+    name: "OneSiam Fine Dining"
+    maxTables: 100 # Maximum number of tables
+    seatsPerTable: 4 # Number of seats per table
+    code:
+        charset: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" # Sets the characters to be used to generate the code.
+        length: 6 # Set the length of the code
+
+database:
+    type: "in-memory"

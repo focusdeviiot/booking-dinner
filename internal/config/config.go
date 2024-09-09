@@ -7,8 +7,10 @@ import (
 )
 
 type Config struct {
-	Server ServerConfig
-	Logger LoggerConfig
+	Server     ServerConfig
+	Logger     LoggerConfig
+	Restaurant RestaurantConfig
+	Database   DatabaseConfig
 }
 
 type ServerConfig struct {
@@ -18,6 +20,16 @@ type ServerConfig struct {
 
 type LoggerConfig struct {
 	Production bool
+}
+
+type RestaurantConfig struct {
+	Name          string
+	MaxTables     int
+	SeatsPerTable int
+}
+
+type DatabaseConfig struct {
+	Type string
 }
 
 // LoadConfig reads configuration from file or environment variables

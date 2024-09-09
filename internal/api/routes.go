@@ -1,8 +1,8 @@
 package api
 
 import (
-	"smart_electricity_tracker_backend/internal/api/handlers"
-	"smart_electricity_tracker_backend/internal/middleware"
+	"booking-dinner/internal/api/handlers"
+	"booking-dinner/internal/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
