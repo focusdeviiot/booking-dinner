@@ -14,10 +14,14 @@ func SetupRoutes(app *fiber.App, handler handlers.Handler) {
 	api = api.Group("/v1")
 
 	// Middleware
+	app.Use(middleware.RequestID())
 	api.Use(middleware.Logger())
 	api.Use(middleware.Recover())
 
 	// Routes
+	api.Post("/initialize", handler.InitializeTables)
+	api.Post("/reserve", handler.ReserveTables)
+	api.Post("/cancel", handler.CancelReservation)
 
 	// Health check
 	api.Get("/health", HealthCheck)

@@ -5,7 +5,10 @@ import (
 	"log"
 
 	"booking-dinner/internal/api"
+	"booking-dinner/internal/api/handlers"
 	"booking-dinner/internal/config"
+	"booking-dinner/internal/domain/restaurant"
+	"booking-dinner/internal/storage/memory"
 	"booking-dinner/pkg/logger"
 
 	"github.com/gofiber/fiber/v2"
@@ -26,10 +29,13 @@ func main() {
 	defer logger.Sync()
 
 	// Initialize repository
+	repo := memory.NewRestaurantRepository()
 
 	// Initialize service
+	service := restaurant.NewService(repo, cfg.Restaurant.SeatsPerTable, cfg.Restaurant.MaxTables, cfg.Restaurant.Code.Charset, cfg.Restaurant.Code.Length)
 
 	// Initialize handler
+	handler := handlers.NewRestaurantHandler(service)
 
 	// Initialize Fiber app
 	app := fiber.New()

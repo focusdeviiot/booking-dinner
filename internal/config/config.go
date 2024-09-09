@@ -26,6 +26,12 @@ type RestaurantConfig struct {
 	Name          string
 	MaxTables     int
 	SeatsPerTable int
+	Code          CodeConfig
+}
+
+type CodeConfig struct {
+	Length  int
+	Charset string
 }
 
 type DatabaseConfig struct {
