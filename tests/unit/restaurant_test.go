@@ -75,10 +75,10 @@ func TestCancelReservation(t *testing.T) {
 	service := restaurant.NewService(mockRepo, 4, 20, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 6)
 
 	mockRepo.On("IsInitialized").Return(true)
-	mockRepo.On("CancelReservation", "booking-555").Return(1, nil)
+	mockRepo.On("CancelReservation", "BOOK55").Return(1, nil)
 	mockRepo.On("GetAvailableTables").Return(10)
 
-	tablesFreed, remaining, err := service.CancelReservation("booking-555")
+	tablesFreed, remaining, err := service.CancelReservation("BOOK55")
 	assert.NoError(t, err)
 	assert.Equal(t, 1, tablesFreed)
 	assert.Equal(t, 10, remaining)

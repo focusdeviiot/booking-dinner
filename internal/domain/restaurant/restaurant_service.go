@@ -3,6 +3,7 @@ package restaurant
 import (
 	"fmt"
 	"math"
+	"regexp"
 	"time"
 
 	"booking-dinner/internal/domain/models"
@@ -72,6 +73,12 @@ func (s *service) ReserveTables(numCustomers int) (string, int, int, error) {
 func (s *service) CancelReservation(bookingID string) (int, int, error) {
 	if !s.repo.IsInitialized() {
 		return 0, 0, errors.ErrTableNotInitialized
+	}
+
+	pattern := fmt.Sprintf("^[%s]{%d}$", regexp.QuoteMeta(s.charsetCode), s.lengthCode)
+	regexBookingID := regexp.MustCompile(pattern)
+	if !regexBookingID.MatchString(bookingID) {
+		return 0, 0, errors.ErrInvalidBookingID
 	}
 
 	tablesFreed, err := s.repo.CancelReservation(bookingID)
